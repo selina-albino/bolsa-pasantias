@@ -7,12 +7,12 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebas
 import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const firebaseConfig = {
-  apiKey: "PEGAR_API_KEY",
-  authDomain: "PEGAR_PROYECTO.firebaseapp.com",
-  projectId: "PEGAR_PROYECTO",
-  storageBucket: "PEGAR_PROYECTO.firebasestorage.app",
-  messagingSenderId: "PEGAR_SENDER_ID",
-  appId: "PEGAR_APP_ID",
+  apiKey: "AIzaSyAcS8OJkoSijMZvRDsn6NWsUvPxykiZElg",
+  authDomain: "bolsa-pasantias-ucatec.firebaseapp.com",
+  projectId: "bolsa-pasantias-ucatec",
+  storageBucket: "bolsa-pasantias-ucatec.firebasestorage.app",
+  messagingSenderId: "681018072824",
+  appId: "1:681018072824:web:beea4976f4c9bd1327650d"
 };
 
 const app = initializeApp(firebaseConfig);
