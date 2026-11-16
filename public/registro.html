@@ -3,89 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Registro | Bolsa de Pasantías</title>
+  <title>Crear cuenta | CampusJob</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Instrument+Sans:wght@400..600&display=swap">
   <link rel="stylesheet" href="/css/estilos.css">
 </head>
 <body>
   <header id="cabecera"></header>
 
-  <main class="contenedor">
-    <section class="tarjeta formulario-centrado" aria-labelledby="titulo">
-      <h1 id="titulo">Crear cuenta</h1>
+  <main class="acceso">
+    <aside class="acceso__lema">
+      <p id="lema">Encuentra pasantías para tu carrera y postula con tu CV.</p>
+      <small id="lema-detalle">Filtra por carrera, modalidad y tipo, y sigue el estado de cada postulación.</small>
+    </aside>
 
-      <form id="form-registro" class="formulario" novalidate>
-        <fieldset class="campo">
-          <legend>Me registro como</legend>
-          <div class="selector-rol">
-            <label><input type="radio" name="rol" value="estudiante" checked> Estudiante</label>
-            <label><input type="radio" name="rol" value="empresa"> Empresa</label>
-          </div>
-        </fieldset>
+    <section class="acceso__formulario" aria-labelledby="titulo">
+      <div>
+        <h1 id="titulo">Crear cuenta</h1>
 
-        <div class="campo">
-          <label for="nombre" id="etiqueta-nombre">Nombre completo</label>
-          <input type="text" id="nombre" name="nombre" autocomplete="name" required>
-        </div>
+        <form id="form-registro" class="formulario" novalidate>
+          <fieldset class="campo">
+            <legend class="sr-only">Tipo de cuenta</legend>
+            <div class="selector-rol">
+              <label><input type="radio" name="rol" value="estudiante" checked> Soy estudiante</label>
+              <label><input type="radio" name="rol" value="empresa"> Soy empresa</label>
+            </div>
+          </fieldset>
 
-        <!-- Datos solo de estudiante -->
-        <div id="datos-estudiante" class="fila-2">
           <div class="campo">
-            <label for="carrera">Carrera</label>
-            <select id="carrera" name="carrera" required></select>
+            <label for="nombre" id="etiqueta-nombre">Nombre completo</label>
+            <input type="text" id="nombre" name="nombre" autocomplete="name" required>
           </div>
-          <div class="campo">
-            <label for="semestre">Semestre</label>
-            <select id="semestre" name="semestre" required></select>
-          </div>
-        </div>
 
-        <!-- Datos solo de empresa -->
-        <div id="datos-empresa" hidden>
+          <!-- Datos solo de estudiante -->
+          <div id="datos-estudiante" class="fila-2">
+            <div class="campo">
+              <label for="carrera">Carrera</label>
+              <select id="carrera" name="carrera" required></select>
+            </div>
+            <div class="campo">
+              <label for="semestre">Semestre</label>
+              <select id="semestre" name="semestre" required></select>
+            </div>
+          </div>
+
+          <!-- Datos solo de empresa -->
+          <div id="datos-empresa" class="formulario" hidden>
+            <div class="fila-2">
+              <div class="campo">
+                <label for="nit">NIT</label>
+                <input type="text" id="nit" name="nit" inputmode="numeric" required>
+              </div>
+              <div class="campo">
+                <label for="rubro">Rubro</label>
+                <input type="text" id="rubro" name="rubro" placeholder="Ej.: Tecnología" required>
+              </div>
+            </div>
+            <div class="campo">
+              <label for="descripcion">Qué hace la empresa</label>
+              <textarea id="descripcion" name="descripcion" rows="3"></textarea>
+            </div>
+            <p class="mensaje mensaje--info">El administrador revisa cada empresa antes de que pueda publicar. Mientras tanto tu cuenta queda pendiente.</p>
+          </div>
+
+          <div class="campo">
+            <label for="correo">Correo electrónico</label>
+            <input type="email" id="correo" name="correo" autocomplete="email" required>
+          </div>
+
+          <div class="campo">
+            <label for="whatsapp">WhatsApp</label>
+            <input type="tel" id="whatsapp" name="whatsapp" inputmode="numeric" pattern="591[67][0-9]{7}" placeholder="59170000000" aria-describedby="ayuda-whatsapp" required>
+            <small id="ayuda-whatsapp">Con 591 adelante, sin espacios ni +. Las empresas te contactan por aquí.</small>
+          </div>
+
           <div class="fila-2">
             <div class="campo">
-              <label for="nit">NIT</label>
-              <input type="text" id="nit" name="nit" inputmode="numeric" required>
+              <label for="password">Contraseña</label>
+              <input type="password" id="password" name="password" autocomplete="new-password" minlength="6" aria-describedby="ayuda-password" required>
+              <small id="ayuda-password">Mínimo 6 caracteres.</small>
             </div>
             <div class="campo">
-              <label for="rubro">Rubro</label>
-              <input type="text" id="rubro" name="rubro" placeholder="Ej.: Tecnología, Comercio" required>
+              <label for="password2">Repite la contraseña</label>
+              <input type="password" id="password2" name="password2" autocomplete="new-password" minlength="6" required>
             </div>
           </div>
-          <div class="campo">
-            <label for="descripcion">Descripción de la empresa</label>
-            <textarea id="descripcion" name="descripcion" rows="3"></textarea>
-          </div>
-          <p class="mensaje mensaje--info">Tu cuenta quedará pendiente hasta que el administrador la apruebe. Recién entonces podrás publicar ofertas.</p>
-        </div>
 
-        <div class="campo">
-          <label for="correo">Correo electrónico</label>
-          <input type="email" id="correo" name="correo" autocomplete="email" required>
-        </div>
+          <p id="mensaje" role="alert" hidden></p>
 
-        <div class="campo">
-          <label for="whatsapp">Número de WhatsApp</label>
-          <input type="tel" id="whatsapp" name="whatsapp" inputmode="numeric" pattern="591[67][0-9]{7}" placeholder="59170000000" required>
-          <small>Con código de país, sin espacios ni signo +. Ej.: 59170000000</small>
-        </div>
+          <button type="submit" class="boton boton--bloque">Crear cuenta</button>
+        </form>
 
-        <div class="fila-2">
-          <div class="campo">
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" autocomplete="new-password" minlength="6" required>
-          </div>
-          <div class="campo">
-            <label for="password2">Repetir contraseña</label>
-            <input type="password" id="password2" name="password2" autocomplete="new-password" minlength="6" required>
-          </div>
-        </div>
-
-        <p id="mensaje" role="alert" hidden></p>
-
-        <button type="submit" class="boton">Crear cuenta</button>
-      </form>
-
-      <p>¿Ya tienes cuenta? <a href="/login.html">Inicia sesión</a></p>
+        <p class="pie-formulario">¿Ya tienes cuenta? <a href="/login.html">Iniciar sesión</a></p>
+      </div>
     </section>
   </main>
 

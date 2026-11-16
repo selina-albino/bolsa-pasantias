@@ -9,6 +9,8 @@ const mensaje = document.getElementById("mensaje");
 const bloqueEstudiante = document.getElementById("datos-estudiante");
 const bloqueEmpresa = document.getElementById("datos-empresa");
 const etiquetaNombre = document.getElementById("etiqueta-nombre");
+const lema = document.getElementById("lema");
+const lemaDetalle = document.getElementById("lema-detalle");
 
 // Llenar listas desplegables
 form.carrera.innerHTML =
@@ -27,6 +29,12 @@ function cambiarRol() {
   bloqueEstudiante.querySelectorAll("select").forEach((c) => (c.disabled = esEmpresa));
   etiquetaNombre.textContent = esEmpresa ? "Nombre de la empresa" : "Nombre completo";
   form.nombre.autocomplete = esEmpresa ? "organization" : "name";
+  lema.textContent = esEmpresa
+    ? "Publica pasantías y recibe postulantes de la carrera que necesitas."
+    : "Encuentra pasantías para tu carrera y postula con tu CV.";
+  lemaDetalle.textContent = esEmpresa
+    ? "Revisas los CV, cambias el estado de cada postulación y contactas por WhatsApp."
+    : "Filtra por carrera, modalidad y tipo, y sigue el estado de cada postulación.";
 }
 
 form.querySelectorAll("input[name=rol]").forEach((r) => r.addEventListener("change", cambiarRol));

@@ -111,6 +111,8 @@ export function mensajeError(error) {
     "auth/wrong-password": "Correo o contraseña incorrectos.",
     "auth/too-many-requests": "Demasiados intentos. Espera unos minutos.",
     "permission-denied": "No tienes permiso para realizar esta acción.",
+    "failed-precondition": "La base de datos se está preparando. Vuelve a intentar en unos minutos.",
+    unavailable: "Sin conexión con el servidor. Revisa tu internet e intenta de nuevo.",
   };
   return mensajes[error?.code] || error?.message || "Ocurrió un error. Intenta de nuevo.";
 }

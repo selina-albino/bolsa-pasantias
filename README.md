@@ -1,4 +1,4 @@
-# Bolsa de Pasantías y Trabajos para Estudiantes
+# CampusJob — Bolsa de Pasantías y Trabajos para Estudiantes
 
 Sitio web hecho con HTML, CSS y JavaScript, con Firebase como backend (Authentication, Firestore, Storage y Hosting).
 Proyecto de Programación en Internet, UCATEC. Integrantes: Selina Albino Roque y Ariana Aguilar Otalora.
@@ -10,7 +10,7 @@ Proyecto de Programación en Internet, UCATEC. Integrantes: Selina Albino Roque 
 | Registro, inicio de sesión y roles | RF01 | Selina | Hecho |
 | Publicar oferta | RF02 | Selina | Hecho |
 | Editar / cerrar oferta | RF03 | Selina | Hecho |
-| Listado de ofertas | RF04 | Ariana | Listado básico hecho; faltan buscador y filtros |
+| Listado, buscador y filtros | RF04 | Ariana | Hecho en la portada (frase con filtros + búsqueda por texto) |
 | Detalle de oferta | RF05 | Ariana | Versión base hecha |
 | Postular con CV | RF06 | Selina | Hecho |
 | Perfil y estado de postulaciones | RF07 | Ariana | Pendiente (`estudiante/postulaciones.html`) |

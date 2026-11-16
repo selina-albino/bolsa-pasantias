@@ -24,13 +24,22 @@ export async function pintarCabecera() {
     ? `<span class="cabecera__usuario">${escapar(perfil.nombre)}</span>
        <button type="button" class="boton boton--secundario" id="boton-salir">Cerrar sesión</button>`
     : `<a href="/login.html" class="boton boton--secundario">Iniciar sesión</a>
-       <a href="/registro.html" class="boton">Registrarse</a>`;
+       <a href="/registro.html" class="boton">Crear cuenta</a>`;
 
   cabecera.className = "cabecera";
   cabecera.innerHTML = `
-    <a href="/index.html" class="cabecera__marca">Bolsa de Pasantías</a>
-    <nav class="cabecera__nav" aria-label="Principal">${enlaces.join("")}</nav>
-    <div class="cabecera__cuenta">${cuenta}</div>`;
+    <div class="cabecera__interior">
+      <a href="/index.html" class="marca" aria-label="CampusJob, inicio">Campus<span>Job</span></a>
+      <nav class="cabecera__nav" aria-label="Principal">${enlaces.join("")}</nav>
+      <div class="cabecera__cuenta">${cuenta}</div>
+    </div>`;
+
+  // Marca la página actual en el menú
+  cabecera.querySelectorAll(".cabecera__nav a").forEach((a) => {
+    const ruta = new URL(a.href).pathname;
+    const actual = location.pathname === "/" ? "/index.html" : location.pathname;
+    if (ruta === actual) a.setAttribute("aria-current", "page");
+  });
 
   document.getElementById("boton-salir")?.addEventListener("click", async () => {
     await cerrarSesion();
@@ -64,6 +73,25 @@ export function formatearFecha(valor) {
   }
   const fecha = valor.toDate ? valor.toDate() : new Date(valor);
   return fecha.toLocaleDateString("es-BO");
+}
+
+const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+
+// Datos para el talón de fecha de cierre: día, mes y cuántos días faltan.
+export function datosPlazo(fechaISO) {
+  if (!fechaISO) return { dia: "--", mes: "", nota: "sin fecha", pronto: false };
+  const [a, m, d] = fechaISO.split("-").map(Number);
+  const cierre = new Date(a, m - 1, d);
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  const faltan = Math.round((cierre - hoy) / 86400000);
+
+  let nota = `cierra en ${faltan} días`;
+  if (faltan < 0) nota = "cerró";
+  else if (faltan === 0) nota = "cierra hoy";
+  else if (faltan === 1) nota = "cierra mañana";
+
+  return { dia: String(d).padStart(2, "0"), mes: MESES[m - 1], nota, pronto: faltan >= 0 && faltan <= 3 };
 }
 
 export function hoyISO() {

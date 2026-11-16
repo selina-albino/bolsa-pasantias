@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mis ofertas | Bolsa de Pasantías</title>
+  <title>Mis ofertas | CampusJob</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Instrument+Sans:wght@400..600&display=swap">
   <link rel="stylesheet" href="/css/estilos.css">
 </head>
 <body>
@@ -11,14 +14,17 @@
 
   <main class="contenedor">
     <div class="encabezado-pagina">
-      <h1>Mis ofertas</h1>
-      <a href="/empresa/oferta.html" id="boton-publicar" class="boton" hidden>+ Publicar oferta</a>
+      <div>
+        <h1>Mis ofertas</h1>
+        <p id="conteo"></p>
+      </div>
+      <a href="/empresa/oferta.html" id="boton-publicar" class="boton" hidden>Publicar oferta</a>
     </div>
 
     <p id="estado-cuenta" role="status" hidden></p>
     <p id="mensaje" role="alert" hidden></p>
 
-    <section id="lista-ofertas" class="rejilla" aria-label="Ofertas publicadas"></section>
+    <ul id="lista-ofertas" class="lista-ofertas" aria-label="Ofertas publicadas"></ul>
   </main>
 
   <script type="module" src="/js/paginas/empresa-panel.js"></script>

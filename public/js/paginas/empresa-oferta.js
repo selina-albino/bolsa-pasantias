@@ -33,7 +33,7 @@ if (perfil.estadoValidacion !== VALIDACION.APROBADA) {
 // Modo edición: cargar la oferta
 if (id) {
   document.getElementById("titulo").textContent = "Editar oferta";
-  document.title = "Editar oferta | Bolsa de Pasantías";
+  document.title = "Editar oferta | CampusJob";
   document.getElementById("boton-guardar").textContent = "Guardar cambios";
 
   const oferta = await obtenerOferta(id).catch(() => null);

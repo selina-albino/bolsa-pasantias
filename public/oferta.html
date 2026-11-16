@@ -3,43 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Detalle de oferta | Bolsa de Pasantías</title>
+  <title>Oferta | CampusJob</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Instrument+Sans:wght@400..600&display=swap">
   <link rel="stylesheet" href="/css/estilos.css">
 </head>
 <body>
   <header id="cabecera"></header>
 
   <main class="contenedor">
-    <p><a href="/index.html">&larr; Volver a las ofertas</a></p>
+    <a class="volver" href="/index.html">Volver a las ofertas</a>
 
     <p id="mensaje" role="alert" hidden></p>
 
-    <article id="detalle" class="tarjeta detalle" hidden>
-      <span id="estado" class="etiqueta"></span>
-      <h1 id="titulo-oferta"></h1>
-      <p id="empresa" class="oferta__empresa"></p>
-      <ul id="etiquetas" class="oferta__datos"></ul>
+    <div id="detalle" class="detalle" hidden>
+      <article class="detalle__principal">
+        <p id="empresa" class="detalle__empresa"></p>
+        <h1 id="titulo-oferta"></h1>
+        <ul id="rasgos" class="rasgos" aria-label="Características"></ul>
 
-      <dl>
-        <dt>Descripción</dt>
-        <dd id="descripcion"></dd>
-        <dt>Requisitos</dt>
-        <dd id="requisitos"></dd>
-        <dt>Carreras</dt>
-        <dd id="carreras"></dd>
-        <dt>Ubicación</dt>
-        <dd id="ubicacion"></dd>
-        <dt>Horario</dt>
-        <dd id="horario"></dd>
-        <dt>Postulación hasta</dt>
-        <dd id="fecha-limite"></dd>
-      </dl>
-    </article>
+        <section class="detalle__bloque">
+          <h2>De qué se trata</h2>
+          <p id="descripcion"></p>
+        </section>
 
-    <section id="postular" class="tarjeta" aria-labelledby="titulo-postular" hidden style="margin-top: 1rem">
-      <h2 id="titulo-postular">Postular a esta oferta</h2>
-      <div id="contenido-postular"></div>
-    </section>
+        <section class="detalle__bloque">
+          <h2>Qué piden</h2>
+          <p id="requisitos"></p>
+        </section>
+
+        <dl class="datos">
+          <div><dt>Carreras</dt><dd id="carreras"></dd></div>
+          <div><dt>Ubicación</dt><dd id="ubicacion"></dd></div>
+          <div><dt>Horario</dt><dd id="horario"></dd></div>
+        </dl>
+      </article>
+
+      <aside class="panel-postular" aria-labelledby="titulo-postular">
+        <div class="panel-postular__plazo">
+          <span id="plazo-dia" class="panel-postular__dia"></span>
+          <span id="plazo-texto" class="panel-postular__texto"></span>
+        </div>
+        <h2 id="titulo-postular">Postular</h2>
+        <div id="contenido-postular"></div>
+      </aside>
+    </div>
   </main>
 
   <script type="module" src="/js/paginas/oferta-detalle.js"></script>

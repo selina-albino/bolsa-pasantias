@@ -3,29 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bolsa de Pasantías y Trabajos para Estudiantes</title>
-  <meta name="description" content="Ofertas de pasantías y trabajos de medio tiempo para estudiantes universitarios de Cochabamba.">
+  <title>CampusJob | Pasantías y trabajos para estudiantes</title>
+  <meta name="description" content="Pasantías y trabajos de medio tiempo para estudiantes universitarios de Cochabamba, publicados por empresas verificadas.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Instrument+Sans:wght@400..600&display=swap">
   <link rel="stylesheet" href="/css/estilos.css">
 </head>
 <body>
   <header id="cabecera"></header>
 
   <main class="contenedor">
-    <section class="encabezado-pagina">
-      <div>
-        <h1>Pasantías y trabajos para estudiantes</h1>
-        <p class="oferta__empresa">Ofertas de empresas verificadas en Cochabamba, en un solo lugar.</p>
-      </div>
-    </section>
+    <h1 class="sr-only">CampusJob: pasantías y trabajos para estudiantes de Cochabamba</h1>
 
-    <!-- Buscador y filtros por carrera, modalidad y tipo (RF04): módulo de Ariana -->
-    <section id="filtros" aria-label="Filtros"></section>
+    <!-- Buscador en forma de frase: filtros por carrera, tipo y modalidad (RF04) -->
+    <form id="buscador" class="buscador" role="search" aria-label="Buscar ofertas">
+      <p class="frase">
+        Estudio
+        <label><span class="sr-only">Carrera</span>
+          <select id="f-carrera" name="carrera"><option value="">cualquier carrera</option></select>
+        </label>
+        y&nbsp;busco
+        <label><span class="sr-only">Tipo de oferta</span>
+          <select id="f-tipo" name="tipo">
+            <option value="">una pasantía o un trabajo</option>
+            <option value="Pasantía">una pasantía</option>
+            <option value="Trabajo">un trabajo</option>
+          </select>
+        </label>
+        <label><span class="sr-only">Modalidad</span>
+          <select id="f-modalidad" name="modalidad">
+            <option value="">en cualquier modalidad</option>
+            <option value="Presencial">presencial</option>
+            <option value="Remoto">remoto</option>
+            <option value="Híbrido">híbrido</option>
+          </select>
+        </label>
+      </p>
+
+      <div class="buscador__extra">
+        <div class="buscador__texto">
+          <label for="f-texto" class="sr-only">Buscar por puesto o empresa</label>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" id="f-texto" name="texto" placeholder="Buscar por puesto o empresa">
+        </div>
+        <p id="resumen" class="resumen" aria-live="polite">Cargando ofertas...</p>
+      </div>
+    </form>
 
     <p id="mensaje" role="alert" hidden></p>
 
-    <section id="lista-ofertas" class="rejilla" aria-label="Ofertas abiertas">
-      <p class="vacio">Cargando ofertas...</p>
-    </section>
+    <ul id="lista-ofertas" class="fichas" aria-label="Ofertas abiertas"></ul>
   </main>
 
   <script type="module" src="/js/paginas/inicio.js"></script>
