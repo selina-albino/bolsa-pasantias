@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Detalle de oferta | Bolsa de Pasantías</title>
+  <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+  <header id="cabecera"></header>
+
+  <main class="contenedor">
+    <p><a href="/index.html">&larr; Volver a las ofertas</a></p>
+
+    <p id="mensaje" role="alert" hidden></p>
+
+    <article id="detalle" class="tarjeta detalle" hidden>
+      <span id="estado" class="etiqueta"></span>
+      <h1 id="titulo-oferta"></h1>
+      <p id="empresa" class="oferta__empresa"></p>
+      <ul id="etiquetas" class="oferta__datos"></ul>
+
+      <dl>
+        <dt>Descripción</dt>
+        <dd id="descripcion"></dd>
+        <dt>Requisitos</dt>
+        <dd id="requisitos"></dd>
+        <dt>Carreras</dt>
+        <dd id="carreras"></dd>
+        <dt>Ubicación</dt>
+        <dd id="ubicacion"></dd>
+        <dt>Horario</dt>
+        <dd id="horario"></dd>
+        <dt>Postulación hasta</dt>
+        <dd id="fecha-limite"></dd>
+      </dl>
+    </article>
+
+    <section id="postular" class="tarjeta" aria-labelledby="titulo-postular" hidden style="margin-top: 1rem">
+      <h2 id="titulo-postular">Postular a esta oferta</h2>
+      <div id="contenido-postular"></div>
+    </section>
+  </main>
+
+  <script type="module" src="/js/paginas/oferta-detalle.js"></script>
+</body>
+</html>

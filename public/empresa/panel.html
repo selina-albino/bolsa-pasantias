@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mis ofertas | Bolsa de Pasantías</title>
+  <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+  <header id="cabecera"></header>
+
+  <main class="contenedor">
+    <div class="encabezado-pagina">
+      <h1>Mis ofertas</h1>
+      <a href="/empresa/oferta.html" id="boton-publicar" class="boton" hidden>+ Publicar oferta</a>
+    </div>
+
+    <p id="estado-cuenta" role="status" hidden></p>
+    <p id="mensaje" role="alert" hidden></p>
+
+    <section id="lista-ofertas" class="rejilla" aria-label="Ofertas publicadas"></section>
+  </main>
+
+  <script type="module" src="/js/paginas/empresa-panel.js"></script>
+</body>
+</html>

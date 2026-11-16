@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bolsa de Pasantías y Trabajos para Estudiantes</title>
+  <meta name="description" content="Ofertas de pasantías y trabajos de medio tiempo para estudiantes universitarios de Cochabamba.">
+  <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+  <header id="cabecera"></header>
+
+  <main class="contenedor">
+    <section class="encabezado-pagina">
+      <div>
+        <h1>Pasantías y trabajos para estudiantes</h1>
+        <p class="oferta__empresa">Ofertas de empresas verificadas en Cochabamba, en un solo lugar.</p>
+      </div>
+    </section>
+
+    <!-- Buscador y filtros por carrera, modalidad y tipo (RF04): módulo de Ariana -->
+    <section id="filtros" aria-label="Filtros"></section>
+
+    <p id="mensaje" role="alert" hidden></p>
+
+    <section id="lista-ofertas" class="rejilla" aria-label="Ofertas abiertas">
+      <p class="vacio">Cargando ofertas...</p>
+    </section>
+  </main>
+
+  <script type="module" src="/js/paginas/inicio.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+rules_version = '2';
+
+// Reglas de Cloud Storage para los CV (RF06, RNF01).
+// Ruta: cvs/{estudianteId}/{ofertaId}/cv.pdf
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /cvs/{estudianteId}/{ofertaId}/{archivo} {
+
+      // El estudiante sube su CV: solo PDF y hasta 5 MB.
+      allow write: if request.auth != null
+        && request.auth.uid == estudianteId
+        && request.resource.contentType == 'application/pdf'
+        && request.resource.size < 5 * 1024 * 1024;
+
+      // Lo ven el propio estudiante y la empresa dueña de la oferta.
+      allow read: if request.auth != null && (
+        request.auth.uid == estudianteId
+        || firestore.get(/databases/(default)/documents/ofertas/$(ofertaId)).data.empresaId == request.auth.uid);
+    }
+  }
+}

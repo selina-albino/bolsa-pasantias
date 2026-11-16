@@ -1,0 +1,98 @@
+rules_version = '2';
+
+// Reglas de seguridad de Cloud Firestore (RNF01).
+// Cada usuario solo lee y modifica lo que le corresponde según su rol.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function autenticado() {
+      return request.auth != null;
+    }
+
+    function perfil() {
+      return get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data;
+    }
+
+    function esRol(rol) {
+      return autenticado() && perfil().rol == rol;
+    }
+
+    function esEmpresaAprobada() {
+      return esRol('empresa') && perfil().estadoValidacion == 'aprobada';
+    }
+
+    function soloCambia(campos) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(campos);
+    }
+
+    // ---------- Usuarios ----------
+    match /usuarios/{uid} {
+      allow read: if autenticado();
+
+      // Registro público: solo estudiante o empresa; la empresa nace "pendiente".
+      allow create: if autenticado()
+        && request.auth.uid == uid
+        && request.resource.data.rol in ['estudiante', 'empresa']
+        && (request.resource.data.rol == 'estudiante'
+            || request.resource.data.estadoValidacion == 'pendiente');
+
+      // El usuario edita sus datos, pero no puede cambiar su rol ni su validación.
+      allow update: if request.auth.uid == uid
+        && !request.resource.data.diff(resource.data).affectedKeys()
+             .hasAny(['rol', 'estadoValidacion', 'motivoRechazo']);
+
+      // El administrador aprueba o rechaza empresas (RF09).
+      allow update: if esRol('admin')
+        && resource.data.rol == 'empresa'
+        && soloCambia(['estadoValidacion', 'motivoRechazo']);
+
+      allow delete: if false;
+    }
+
+    // ---------- Ofertas ----------
+    match /ofertas/{ofertaId} {
+      // Las abiertas son públicas; la empresa ve también las suyas cerradas.
+      allow read: if resource.data.estado == 'abierta'
+        || (autenticado() && resource.data.empresaId == request.auth.uid)
+        || esRol('admin');
+
+      // RF02: solo una empresa aprobada publica, a su nombre y en estado "abierta".
+      allow create: if esEmpresaAprobada()
+        && request.resource.data.empresaId == request.auth.uid
+        && request.resource.data.estado == 'abierta';
+
+      // RF03: la empresa edita o cierra solo sus propias ofertas.
+      allow update: if autenticado()
+        && resource.data.empresaId == request.auth.uid
+        && request.resource.data.empresaId == resource.data.empresaId
+        && request.resource.data.estado in ['abierta', 'cerrada'];
+
+      allow delete: if false;
+    }
+
+    // ---------- Postulaciones ----------
+    // El id es "{ofertaId}_{estudianteId}": así un estudiante no puede postular dos veces.
+    match /postulaciones/{postId} {
+      allow read: if autenticado() && (
+        postId.matches('.*_' + request.auth.uid)
+        || resource.data.empresaId == request.auth.uid
+        || esRol('admin'));
+
+      // RF06: el estudiante postula a una oferta abierta, con estado inicial "Enviada".
+      allow create: if esRol('estudiante')
+        && postId == request.resource.data.ofertaId + '_' + request.auth.uid
+        && request.resource.data.estudianteId == request.auth.uid
+        && request.resource.data.estado == 'Enviada'
+        && get(/databases/$(database)/documents/ofertas/$(request.resource.data.ofertaId)).data.estado == 'abierta'
+        && request.resource.data.empresaId == get(/databases/$(database)/documents/ofertas/$(request.resource.data.ofertaId)).data.empresaId;
+
+      // RF07: la empresa dueña de la oferta cambia el estado.
+      allow update: if autenticado()
+        && resource.data.empresaId == request.auth.uid
+        && soloCambia(['estado', 'historial', 'actualizadoEn'])
+        && request.resource.data.estado in ['Enviada', 'Vista', 'Entrevista', 'Aceptada', 'Rechazada'];
+
+      allow delete: if false;
+    }
+  }
+}

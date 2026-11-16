@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Publicar oferta | Bolsa de Pasantías</title>
+  <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+  <header id="cabecera"></header>
+
+  <main class="contenedor">
+    <section class="tarjeta" aria-labelledby="titulo">
+      <h1 id="titulo">Publicar oferta</h1>
+
+      <p id="aviso" role="status" hidden></p>
+
+      <form id="form-oferta" class="formulario" novalidate>
+        <div class="campo">
+          <label for="titulo-oferta">Título</label>
+          <input type="text" id="titulo-oferta" name="titulo" maxlength="100" placeholder="Ej.: Pasante de desarrollo web" required>
+        </div>
+
+        <div class="campo">
+          <label for="descripcion">Descripción</label>
+          <textarea id="descripcion" name="descripcion" placeholder="Qué hará la persona, en qué área y con qué beneficios" required></textarea>
+        </div>
+
+        <div class="campo">
+          <label for="requisitos">Requisitos</label>
+          <textarea id="requisitos" name="requisitos" placeholder="Un requisito por línea" required></textarea>
+        </div>
+
+        <fieldset class="campo">
+          <legend>Carreras a las que está dirigida</legend>
+          <div id="carreras" class="opciones"></div>
+          <small id="error-carreras" role="alert" hidden>Selecciona al menos una carrera.</small>
+        </fieldset>
+
+        <div class="fila-2">
+          <div class="campo">
+            <label for="tipo">Tipo</label>
+            <select id="tipo" name="tipo" required></select>
+          </div>
+          <div class="campo">
+            <label for="modalidad">Modalidad</label>
+            <select id="modalidad" name="modalidad" required></select>
+          </div>
+        </div>
+
+        <div class="fila-2">
+          <div class="campo">
+            <label for="ubicacion">Ubicación</label>
+            <input type="text" id="ubicacion" name="ubicacion" placeholder="Ej.: Cochabamba, zona Queru Queru" required>
+          </div>
+          <div class="campo">
+            <label for="horario">Horario</label>
+            <input type="text" id="horario" name="horario" placeholder="Ej.: Lunes a viernes, 14:00 a 18:00" required>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="fechaLimite">Fecha límite de postulación</label>
+          <input type="date" id="fechaLimite" name="fechaLimite" required>
+        </div>
+
+        <p id="mensaje" role="alert" hidden></p>
+
+        <div class="acciones">
+          <button type="submit" class="boton" id="boton-guardar">Publicar oferta</button>
+          <a href="/empresa/panel.html" class="boton boton--secundario">Cancelar</a>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script type="module" src="/js/paginas/empresa-oferta.js"></script>
+</body>
+</html>
