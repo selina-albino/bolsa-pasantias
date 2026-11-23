@@ -736,6 +736,58 @@ img { max-width: 100%; }
   font-size: 0.88rem;
 }
 
+.acciones .selector-estado {
+  width: auto;
+  min-height: 38px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.88rem;
+}
+
+/* ============ Avisos de postulaciones nuevas ============ */
+.insignia {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  margin-left: 0.35rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: var(--alerta);
+  color: var(--blanco);
+  font: 700 0.75rem/1 var(--fuente-texto);
+  vertical-align: middle;
+}
+
+.boton--con-insignia {
+  position: relative;
+}
+
+.insignia--boton {
+  position: absolute;
+  top: -0.55rem;
+  right: -0.45rem;
+  margin: 0;
+  border: 2px solid var(--blanco);
+  height: 1.5rem;
+}
+
+.fila--nueva {
+  border-color: var(--cobalto);
+  box-shadow: inset 4px 0 0 var(--cobalto);
+}
+
+.etiqueta-nueva {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: var(--resaltador);
+  color: var(--tinta);
+  font: 600 0.75rem/1.3 var(--fuente-texto);
+  vertical-align: middle;
+}
+
 /* ============ Formularios ============ */
 .hoja {
   background: var(--blanco);

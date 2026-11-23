@@ -99,7 +99,7 @@ async function pintarPostulacion(o) {
       <label class="archivo">
         <input type="file" id="cv" name="cv" accept="application/pdf,.pdf" required>
         <span id="nombre-archivo" class="archivo__nombre">Elegir mi CV</span>
-        <small>PDF de hasta 5 MB</small>
+        <small>PDF de hasta 700 KB</small>
       </label>
       <p id="mensaje-postular" role="alert" hidden></p>
       <button type="submit" class="boton boton--bloque">Enviar postulación</button>

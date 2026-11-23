@@ -41,9 +41,30 @@ export async function pintarCabecera() {
     if (ruta === actual) a.setAttribute("aria-current", "page");
   });
 
+  if (perfil?.rol === ROLES.EMPRESA) avisarPostulacionesNuevas(cabecera, perfil.uid);
+
   document.getElementById("boton-salir")?.addEventListener("click", async () => {
     await cerrarSesion();
     window.location.href = "/index.html";
+  });
+}
+
+// Avisos de la empresa: insignia con el número de postulaciones nuevas junto a "Mis ofertas"
+// y el número en el título de la pestaña, por ejemplo "(3) Mis ofertas | CampusJob".
+async function avisarPostulacionesNuevas(cabecera, empresaId) {
+  const { escucharPostulacionesNuevas } = await import("./postulaciones.js");
+  const enlace = cabecera.querySelector('.cabecera__nav a[href="/empresa/panel.html"]');
+  const tituloOriginal = document.title;
+  const insignia = document.createElement("span");
+  insignia.className = "insignia";
+  insignia.hidden = true;
+  enlace?.append(insignia);
+
+  escucharPostulacionesNuevas(empresaId, ({ total }) => {
+    insignia.hidden = total === 0;
+    insignia.textContent = total > 99 ? "99+" : String(total);
+    insignia.setAttribute("aria-label", `${total} ${total === 1 ? "postulación nueva" : "postulaciones nuevas"}`);
+    document.title = total ? `(${total}) ${tituloOriginal}` : tituloOriginal;
   });
 }
 

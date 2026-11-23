@@ -1,0 +1,5 @@
+node_modules/
+semilla/clave-firebase.json*
+semilla/cuentas-de-prueba.txt
+.firebase/
+*.log

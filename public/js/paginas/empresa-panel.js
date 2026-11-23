@@ -1,6 +1,7 @@
 // Panel de la empresa: sus ofertas, con ver, editar y cerrar (RF03).
 import { requerirRol, mensajeError } from "../auth.js";
 import { listarOfertasDeEmpresa, cambiarEstadoOferta } from "../ofertas.js";
+import { escucharPostulacionesNuevas } from "../postulaciones.js";
 import { pintarCabecera, mostrarMensaje, escapar, datosPlazo } from "../ui.js";
 import { ROLES, VALIDACION, ESTADO_OFERTA } from "../datos.js";
 
@@ -25,6 +26,23 @@ if (aprobada) {
   mostrarMensaje(estadoCuenta, "Tu empresa está pendiente de validación. Podrás publicar ofertas cuando el administrador la apruebe.", "aviso");
 }
 
+let nuevas = { total: 0, porOferta: {} };
+
+// Pone el número de postulaciones nuevas sobre cada botón "Postulantes".
+function pintarNuevas() {
+  lista.querySelectorAll("[data-nuevas]").forEach((insignia) => {
+    const n = nuevas.porOferta[insignia.dataset.nuevas] || 0;
+    insignia.hidden = n === 0;
+    insignia.textContent = n > 99 ? "99+" : `+${n}`;
+    insignia.setAttribute("aria-label", `${n} ${n === 1 ? "nueva" : "nuevas"}`);
+  });
+}
+
+escucharPostulacionesNuevas(perfil.uid, (datos) => {
+  nuevas = datos;
+  pintarNuevas();
+});
+
 async function cargar() {
   try {
     const ofertas = await listarOfertasDeEmpresa(perfil.uid);
@@ -38,6 +56,7 @@ async function cargar() {
       : `<li class="vacio"><strong>Todavía no publicaste ofertas</strong>${
           aprobada ? "Publica la primera y aparecerá en la portada para los estudiantes." : "Cuando aprueben tu empresa podrás publicar."
         }</li>`;
+    pintarNuevas();
   } catch (error) {
     mostrarMensaje(mensaje, mensajeError(error), "error");
   }
@@ -56,6 +75,7 @@ function fila(o) {
         </p>
       </div>
       <div class="acciones">
+        <a class="boton boton--con-insignia" href="/empresa/postulantes.html?id=${o.id}">Postulantes<span class="insignia insignia--boton" data-nuevas="${o.id}" hidden></span></a>
         <a class="boton boton--secundario" href="/oferta.html?id=${o.id}">Ver</a>
         <a class="boton boton--secundario" href="/empresa/oferta.html?id=${o.id}">Editar</a>
         ${abierta ? `<button type="button" class="boton boton--peligro" data-cerrar="${o.id}">Cerrar oferta</button>` : ""}

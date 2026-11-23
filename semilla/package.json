@@ -1,0 +1,15 @@
+{
+  "name": "campusjob-semilla",
+  "private": true,
+  "type": "module",
+  "description": "Carga datos de prueba en Firebase para CampusJob",
+  "scripts": {
+    "cargar": "node semilla.js",
+    "borrar": "node semilla.js --borrar",
+    "prueba": "node semilla.js --prueba"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.7.0",
+    "pdfkit": "^0.15.0"
+  }
+}

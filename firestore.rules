@@ -94,5 +94,23 @@ service cloud.firestore {
 
       allow delete: if false;
     }
+
+    // ---------- CV de las postulaciones ----------
+    // El PDF se guarda como texto base64 (plan Spark sin Storage). Mismo id que la postulación.
+    match /cvs/{postId} {
+      allow read: if autenticado() && (
+        resource.data.estudianteId == request.auth.uid
+        || resource.data.empresaId == request.auth.uid
+        || esRol('admin'));
+
+      allow create: if esRol('estudiante')
+        && postId == request.resource.data.ofertaId + '_' + request.auth.uid
+        && request.resource.data.estudianteId == request.auth.uid
+        && request.resource.data.empresaId == get(/databases/$(database)/documents/ofertas/$(request.resource.data.ofertaId)).data.empresaId
+        && request.resource.data.contenido is string
+        && request.resource.data.contenido.size() < 1000000;
+
+      allow update, delete: if false;
+    }
   }
 }
