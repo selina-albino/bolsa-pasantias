@@ -142,3 +142,20 @@ export function escucharPostulacionesNuevas(empresaId, alCambiar) {
     () => alCambiar({ total: 0, porOferta: {} })
   );
 }
+
+// RF07: postulaciones del estudiante en tiempo real (más recientes primero).
+// Se ordena en el navegador para no necesitar un índice compuesto.
+// Devuelve una función para dejar de escuchar.
+export function escucharMisPostulaciones(estudianteId, alCambiar, alFallar) {
+  const q = query(collection(db, "postulaciones"), where("estudianteId", "==", estudianteId));
+  return onSnapshot(
+    q,
+    (snap) => {
+      const lista = snap.docs
+        .map((d) => ({ id: d.id, ...d.data() }))
+        .sort((a, b) => (b.fecha?.seconds || 0) - (a.fecha?.seconds || 0));
+      alCambiar(lista);
+    },
+    (error) => alFallar?.(error)
+  );
+}

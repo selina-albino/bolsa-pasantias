@@ -75,6 +75,7 @@ service cloud.firestore {
     match /postulaciones/{postId} {
       allow read: if autenticado() && (
         postId.matches('.*_' + request.auth.uid)
+        || resource.data.estudianteId == request.auth.uid
         || resource.data.empresaId == request.auth.uid
         || esRol('admin'));
 

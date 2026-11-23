@@ -13,14 +13,18 @@
   <header id="cabecera"></header>
 
   <main class="contenedor">
-    <h1>Mis postulaciones</h1>
-    <!-- Perfil y estado de postulaciones (RF07): módulo de Ariana, semana 2 -->
-    <p class="vacio"><strong>En construcción</strong>Aquí vas a ver cada postulación con su estado.</p>
+    <div class="encabezado-pagina">
+      <div>
+        <h1>Mis postulaciones</h1>
+        <p id="subtitulo">Cargando tus postulaciones…</p>
+      </div>
+    </div>
+
+    <p id="mensaje" role="alert" hidden></p>
+
+    <ul id="lista-postulaciones" class="lista-ofertas" aria-label="Mis postulaciones" aria-live="polite"></ul>
   </main>
 
-  <script type="module">
-    import { pintarCabecera } from "/js/ui.js";
-    pintarCabecera();
-  </script>
+  <script type="module" src="/js/paginas/estudiante-postulaciones.js"></script>
 </body>
 </html>

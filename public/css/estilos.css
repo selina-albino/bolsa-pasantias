@@ -724,6 +724,41 @@ img { max-width: 100%; }
 .estado--abierta { color: var(--exito); }
 .estado--cerrada { color: var(--tinta-suave); }
 
+/* Estados de una postulación (RF07) */
+.estado--enviada    { color: var(--cobalto); }
+.estado--vista      { color: var(--tinta-suave); }
+.estado--entrevista { color: var(--alerta); }
+.estado--aceptada   { color: var(--exito); }
+.estado--rechazada  { color: var(--error); }
+
+/* Mis postulaciones (vista del estudiante) */
+.fila__empresa {
+  margin: 0 0 0.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--tinta-suave);
+}
+
+.historial {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 0.75rem 0 0;
+  border-top: 1px solid var(--niebla);
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+  font-size: 0.85rem;
+}
+
+.historial li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.historial time { color: var(--tinta-suave); }
+
 .acciones {
   display: flex;
   flex-wrap: wrap;
