@@ -13,14 +13,23 @@
   <header id="cabecera"></header>
 
   <main class="contenedor">
-    <h1>Validar empresas</h1>
-    <!-- Panel de administración (RF09): módulo de Ariana, semana 3 -->
-    <p class="vacio"><strong>En construcción</strong>Mientras tanto, las empresas se aprueban desde la consola de Firestore (ver README).</p>
+    <div class="encabezado-pagina">
+      <div>
+        <h1>Validar empresas</h1>
+        <p id="subtitulo">Cargando empresas…</p>
+      </div>
+    </div>
+
+    <fieldset class="filtros-validacion">
+      <legend class="sr-only">Mostrar empresas</legend>
+      <div id="filtros" class="opciones"></div>
+    </fieldset>
+
+    <p id="mensaje" role="alert" hidden></p>
+
+    <ul id="lista-empresas" class="lista-ofertas" aria-label="Empresas registradas"></ul>
   </main>
 
-  <script type="module">
-    import { pintarCabecera } from "/js/ui.js";
-    pintarCabecera();
-  </script>
+  <script type="module" src="/js/paginas/admin-empresas.js"></script>
 </body>
 </html>

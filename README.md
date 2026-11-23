@@ -13,10 +13,10 @@ Proyecto de Programación en Internet, UCATEC. Integrantes: Selina Albino Roque 
 | Listado, buscador y filtros | RF04 | Ariana | Hecho en la portada (frase con filtros + búsqueda por texto) |
 | Detalle de oferta | RF05 | Ariana | Versión base hecha |
 | Postular con CV (PDF hasta 700 KB, guardado en Firestore) | RF06 | Selina | Hecho |
-| Perfil y estado de postulaciones | RF07 | Ariana | Pendiente (`estudiante/postulaciones.html`) |
+| Perfil y estado de postulaciones | RF07 | Ariana | Hecho (`estudiante/postulaciones.html`: estado en tiempo real, historial y WhatsApp) |
 | Contacto por WhatsApp | RF08 | Selina | Hecho (estudiante → empresa y empresa → estudiante) |
 | Postulantes de una oferta: ver CV y cambiar estado | RF06/RF07 | Selina | Hecho (`empresa/postulantes.html`) |
-| Panel de administración | RF09 | Ariana | Pendiente (`admin/empresas.html`) |
+| Panel de administración | RF09 | Ariana | Hecho (`admin/empresas.html`: aprobar o rechazar empresas con motivo) |
 
 ## Estructura
 
@@ -32,16 +32,18 @@ public/
   empresa/panel.html     ofertas de la empresa (ver, editar, cerrar)
   empresa/oferta.html    formulario para publicar o editar
   empresa/postulantes.html  postulantes de una oferta: CV, estado y WhatsApp
-  estudiante/            postulaciones del estudiante (Ariana)
-  admin/                 validación de empresas (Ariana)
+  estudiante/postulaciones.html  postulaciones del estudiante: estado, historial y WhatsApp
+  admin/empresas.html    validación de empresas: aprobar o rechazar con motivo
   css/estilos.css        estilos base, responsive
   js/firebase-config.js  claves del proyecto de Firebase
   js/datos.js            carreras, tipos, modalidades, estados
   js/auth.js             autenticación y roles
   js/ofertas.js          publicar, editar, cerrar, listar
-  js/postulaciones.js    postular con CV, listar postulantes, cambiar estado
+  js/postulaciones.js    postular con CV, listar postulantes, cambiar estado, mis postulaciones
+  js/admin.js            listar empresas, aprobar y rechazar (RF09)
   js/ui.js               cabecera, mensajes, utilidades
-  js/paginas/            el código de cada página
+  js/paginas/            el código de cada página (por ejemplo estudiante-postulaciones.js
+                         y admin-empresas.js)
 ```
 
 ## Modelo de datos (Firestore)
@@ -78,13 +80,17 @@ firebase serve                # abre http://localhost:5000
 
 > El sitio usa módulos de JavaScript, así que no funciona abriendo el HTML con doble clic: hay que usar `firebase serve`, la extensión Live Server de VS Code, o la versión publicada.
 
-### 3. Crear el administrador y aprobar empresas (en la consola de Firebase)
+### 3. Crear el administrador y aprobar empresas
 
-Mientras no exista el panel de administración:
+El administrador se crea a mano en la consola de Firebase (no hay registro de administradores en el sitio):
 
 1. Registrar una cuenta desde `registro.html` (como estudiante).
 2. En **Firestore** → colección `usuarios` → abrir su documento → cambiar `rol` a `admin`.
-3. Para aprobar una empresa: abrir su documento en `usuarios` → cambiar `estadoValidacion` a `aprobada`.
+
+Las empresas se aprueban desde el sitio:
+
+3. Iniciar sesión con la cuenta de administrador y entrar a **Validar empresas** (`admin/empresas.html`).
+4. Las empresas nuevas aparecen en **Pendientes**. **Aprobar** las deja publicar ofertas; **Rechazar** pide un motivo, que queda guardado en `motivoRechazo`.
 
 ### 4. Datos de prueba sugeridos
 
