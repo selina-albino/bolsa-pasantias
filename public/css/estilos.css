@@ -759,6 +759,53 @@ img { max-width: 100%; }
 
 .historial time { color: var(--tinta-suave); }
 
+/* Validar empresas (vista del administrador, RF09) */
+.estado--pendiente { color: var(--alerta); }
+.estado--aprobada  { color: var(--exito); }
+/* .estado--rechazada ya está definido arriba */
+
+.filtros-validacion {
+  margin-bottom: 1.25rem;
+}
+
+.empresa__detalle {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.empresa__detalle .datos {
+  margin-top: 0;
+  padding-top: 0.75rem;
+}
+
+.empresa__descripcion {
+  margin: 0;
+  max-width: 68ch;
+  white-space: pre-line;
+}
+
+.empresa__motivo {
+  margin: 0;
+  padding: 0.6rem 0.85rem;
+  border-left: 4px solid var(--error);
+  border-radius: var(--radio-s);
+  background: var(--error-fondo);
+  font-size: 0.9rem;
+}
+
+.rechazo {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1.5px dashed var(--error);
+  border-radius: var(--radio-m);
+}
+
+.rechazo textarea {
+  min-height: 5rem;
+}
+
 .acciones {
   display: flex;
   flex-wrap: wrap;
