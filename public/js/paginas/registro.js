@@ -1,5 +1,5 @@
 import { registrarUsuario, rutaInicio, mensajeError } from "../auth.js";
-import { pintarCabecera, mostrarMensaje } from "../ui.js";
+import { pintarCabecera, mostrarMensaje, exigirTexto } from "../ui.js";
 import { CARRERAS, ROLES } from "../datos.js";
 
 pintarCabecera();
@@ -49,6 +49,7 @@ form.addEventListener("submit", async (evento) => {
   } else {
     form.password2.setCustomValidity("");
   }
+  exigirTexto(form);
   if (!form.reportValidity()) return;
 
   const boton = form.querySelector("button[type=submit]");

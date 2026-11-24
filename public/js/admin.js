@@ -4,11 +4,14 @@ import {
   collection,
   doc,
   updateDoc,
+  getDocs,
+  writeBatch,
+  serverTimestamp,
   query,
   where,
   onSnapshot,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { ROLES, VALIDACION } from "./datos.js";
+import { ROLES, VALIDACION, ESTADO_OFERTA } from "./datos.js";
 
 // Empresas registradas en tiempo real (más recientes primero).
 // Se ordena en el navegador para no necesitar un índice compuesto.
@@ -35,11 +38,22 @@ export function aprobarEmpresa(uid) {
   });
 }
 
-export function rechazarEmpresa(uid, motivo) {
+export async function rechazarEmpresa(uid, motivo) {
   const texto = String(motivo || "").trim();
-  if (!texto) return Promise.reject(new Error("Escribe el motivo del rechazo."));
-  return updateDoc(doc(db, "usuarios", uid), {
+  if (!texto) throw new Error("Escribe el motivo del rechazo.");
+  // En un solo lote: la empresa queda rechazada y sus ofertas abiertas se cierran,
+  // así dejan de aparecer en la portada y no reciben más postulaciones.
+  const abiertas = await getDocs(
+    query(collection(db, "ofertas"), where("empresaId", "==", uid), where("estado", "==", ESTADO_OFERTA.ABIERTA))
+  );
+  const lote = writeBatch(db);
+  lote.update(doc(db, "usuarios", uid), {
     estadoValidacion: VALIDACION.RECHAZADA,
     motivoRechazo: texto,
   });
+  abiertas.docs.forEach((d) =>
+    lote.update(d.ref, { estado: ESTADO_OFERTA.CERRADA, actualizadaEn: serverTimestamp() })
+  );
+  await lote.commit();
+  return abiertas.size;
 }

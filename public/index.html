@@ -16,6 +16,8 @@
   <main class="contenedor">
     <h1 class="sr-only">CampusJob: pasantías y trabajos para estudiantes de Cochabamba</h1>
 
+    <p class="portada__antetitulo">Pasantías y trabajos para universitarios de Cochabamba</p>
+
     <!-- Buscador en forma de frase: filtros por carrera, tipo y modalidad (RF04) -->
     <form id="buscador" class="buscador" role="search" aria-label="Buscar ofertas">
       <p class="frase">
@@ -51,10 +53,39 @@
       </div>
     </form>
 
-    <p id="mensaje" role="alert" hidden></p>
+    <ul id="cifras" class="cifras" aria-label="CampusJob en números"></ul>
 
-    <ul id="lista-ofertas" class="fichas" aria-label="Ofertas abiertas"></ul>
+    <!-- Explorar por área (sugerencia de las pruebas con compañeros) -->
+    <section class="areas" aria-labelledby="titulo-areas">
+      <h2 id="titulo-areas" class="seccion__titulo">Explora por área</h2>
+      <div id="areas" class="areas__lista" role="group" aria-label="Filtrar por área"></div>
+    </section>
+
+    <section aria-labelledby="titulo-ofertas">
+      <div class="ofertas__cabecera">
+        <h2 id="titulo-ofertas" class="seccion__titulo">Ofertas abiertas</h2>
+        <label class="ordenar">
+          Ordenar por
+          <select id="f-orden" form="buscador" name="orden">
+            <option value="recientes">más recientes</option>
+            <option value="cierre">cierran pronto</option>
+          </select>
+        </label>
+      </div>
+
+      <p id="mensaje" role="alert" hidden></p>
+
+      <ul id="lista-ofertas" class="fichas" aria-label="Ofertas abiertas"></ul>
+    </section>
   </main>
+
+  <footer class="pie">
+    <div class="contenedor pie__interior">
+      <p class="marca">Campus<span>Job</span></p>
+      <p>Pasantías y trabajos para estudiantes, publicados por empresas verificadas.</p>
+      <p class="pie__nota">Proyecto de Programación en Internet · UCATEC · Selina Albino Roque y Ariana Aguilar Otalora</p>
+    </div>
+  </footer>
 
   <script type="module" src="/js/paginas/inicio.js"></script>
 </body>

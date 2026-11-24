@@ -27,7 +27,8 @@ service cloud.firestore {
 
     // ---------- Usuarios ----------
     match /usuarios/{uid} {
-      allow read: if autenticado();
+      // Cada usuario lee solo su perfil; el administrador lee todos (para validar empresas).
+      allow read: if autenticado() && (request.auth.uid == uid || esRol('admin'));
 
       // Registro público: solo estudiante o empresa; la empresa nace "pendiente".
       allow create: if autenticado()
@@ -52,20 +53,27 @@ service cloud.firestore {
     // ---------- Ofertas ----------
     match /ofertas/{ofertaId} {
       // Las abiertas son públicas; la empresa ve también las suyas cerradas.
+      // El estudiante que postuló puede seguir viendo la oferta aunque se cierre.
       allow read: if resource.data.estado == 'abierta'
         || (autenticado() && resource.data.empresaId == request.auth.uid)
-        || esRol('admin');
+        || esRol('admin')
+        || (autenticado() && exists(/databases/$(database)/documents/postulaciones/$(ofertaId + '_' + request.auth.uid)));
 
       // RF02: solo una empresa aprobada publica, a su nombre y en estado "abierta".
       allow create: if esEmpresaAprobada()
         && request.resource.data.empresaId == request.auth.uid
         && request.resource.data.estado == 'abierta';
 
-      // RF03: la empresa edita o cierra solo sus propias ofertas.
-      allow update: if autenticado()
+      // RF03: la empresa (aprobada) edita o cierra solo sus propias ofertas.
+      allow update: if esEmpresaAprobada()
         && resource.data.empresaId == request.auth.uid
         && request.resource.data.empresaId == resource.data.empresaId
         && request.resource.data.estado in ['abierta', 'cerrada'];
+
+      // RF09: al rechazar una empresa, el administrador cierra sus ofertas.
+      allow update: if esRol('admin')
+        && soloCambia(['estado', 'actualizadaEn'])
+        && request.resource.data.estado == 'cerrada';
 
       allow delete: if false;
     }

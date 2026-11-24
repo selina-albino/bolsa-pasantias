@@ -196,8 +196,9 @@ lista.addEventListener("submit", async (evento) => {
   enviar.disabled = true;
   try {
     cerrarRechazo(); // antes de guardar: el cambio llega por onSnapshot y redibuja sin el formulario
-    await rechazarEmpresa(uid, motivo);
-    mostrarMensaje(mensaje, `${empresa?.nombre || "La empresa"} fue rechazada.`, "exito");
+    const cerradas = await rechazarEmpresa(uid, motivo);
+    const detalle = cerradas ? ` Se ${cerradas === 1 ? "cerró 1 oferta" : `cerraron ${cerradas} ofertas`} que tenía publicadas.` : "";
+    mostrarMensaje(mensaje, `${empresa?.nombre || "La empresa"} fue rechazada.${detalle}`, "exito");
   } catch (error) {
     rechazandoId = uid;
     borradorMotivo = motivo;

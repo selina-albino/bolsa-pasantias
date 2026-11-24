@@ -111,13 +111,32 @@ export function cambiarEstadoPostulacion(id, estado) {
 }
 
 // Abre el CV en una pestaña nueva con el visor de PDF del navegador.
+// La pestaña se abre en el mismo clic (si se abre después de descargar, Safari y algunos
+// navegadores la bloquean) y luego se carga el PDF. Si el navegador la bloquea igual, se descarga.
 export async function abrirCV(id) {
-  const snap = await getDoc(doc(db, "cvs", id));
-  if (!snap.exists()) throw new Error("Esta postulación no tiene CV guardado.");
-  const archivo = await (await fetch(snap.data().contenido)).blob();
-  const url = URL.createObjectURL(archivo);
-  window.open(url, "_blank", "noopener");
-  setTimeout(() => URL.revokeObjectURL(url), 60000);
+  const ventana = window.open("", "_blank");
+  if (ventana) {
+    ventana.opener = null;
+    ventana.document.title = "Cargando CV...";
+    ventana.document.body.textContent = "Cargando CV...";
+  }
+  try {
+    const snap = await getDoc(doc(db, "cvs", id));
+    if (!snap.exists()) throw new Error("Esta postulación no tiene CV guardado.");
+    const { contenido, nombre } = snap.data();
+    const archivo = await (await fetch(contenido)).blob();
+    const url = URL.createObjectURL(archivo);
+    if (ventana) {
+      ventana.location.href = url;
+    } else {
+      const enlace = Object.assign(document.createElement("a"), { href: url, download: nombre || "cv.pdf" });
+      enlace.click();
+    }
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+  } catch (error) {
+    ventana?.close();
+    throw error;
+  }
 }
 
 // Avisos para la empresa: postulaciones nuevas = las que todavía están "Enviada"

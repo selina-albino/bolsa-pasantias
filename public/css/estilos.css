@@ -306,6 +306,203 @@ img { max-width: 100%; }
   cursor: pointer;
 }
 
+/* ============ Portada: antetítulo, cifras, áreas y pie ============ */
+.portada__antetitulo {
+  display: inline-block;
+  margin: 2rem 0 0;
+  padding: 0.3rem 0.85rem;
+  border: 1.5px solid var(--tinta);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: var(--blanco);
+}
+
+.portada__antetitulo + .buscador {
+  padding-top: 1.25rem;
+}
+
+.cifras {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 2.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.cifras li {
+  padding: 0.9rem 1rem;
+  background: var(--blanco);
+  border: 1.5px solid var(--borde);
+  border-radius: var(--radio-m);
+  font-size: 0.88rem;
+  color: var(--tinta-suave);
+  line-height: 1.3;
+}
+
+.cifras strong {
+  display: block;
+  font-family: var(--fuente-titulo);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--cobalto);
+}
+
+.seccion__titulo {
+  font-size: 1.35rem;
+  margin: 0 0 1rem;
+}
+
+.areas {
+  margin-bottom: 2.5rem;
+}
+
+.areas__lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.area {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 0.7rem;
+  align-items: center;
+  padding: 0.8rem 0.9rem;
+  border: 1.5px solid var(--borde);
+  border-radius: var(--radio-m);
+  background: var(--blanco);
+  color: var(--tinta);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s, translate 0.15s;
+}
+
+.area svg {
+  grid-row: span 2;
+  width: 2.1rem;
+  height: 2.1rem;
+  padding: 0.4rem;
+  border-radius: 10px;
+  background: var(--niebla);
+  color: var(--cobalto);
+}
+
+.area__nombre {
+  font-weight: 600;
+  font-size: 0.92rem;
+  line-height: 1.25;
+}
+
+.area__cuenta {
+  font-size: 0.8rem;
+  color: var(--tinta-suave);
+}
+
+.area:hover {
+  border-color: var(--tinta);
+}
+
+.area[aria-pressed="true"] {
+  border-color: var(--tinta);
+  background: var(--resaltador);
+  box-shadow: 4px 4px 0 var(--tinta);
+  translate: -2px -2px;
+}
+
+.area[aria-pressed="true"] svg {
+  background: var(--blanco);
+  color: var(--tinta);
+}
+
+.area[aria-pressed="true"] .area__cuenta {
+  color: var(--tinta);
+}
+
+.ofertas__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.ordenar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: var(--tinta-suave);
+}
+
+.ordenar select {
+  width: auto;
+  min-height: 38px;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+.ficha__lugar {
+  margin: 0.6rem 0 0;
+  font-size: 0.88rem;
+  color: var(--tinta);
+}
+
+.ficha__lugar::before {
+  content: "";
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-right: 0.4rem;
+  border-radius: 50% 50% 50% 0;
+  rotate: -45deg;
+  background: var(--cobalto);
+}
+
+.ficha__lugar + .ficha__carreras {
+  margin-top: 0.25rem;
+}
+
+.rasgo--area {
+  border-color: var(--borde);
+  font-weight: 500;
+  color: var(--tinta-suave);
+}
+
+.pie {
+  margin-top: 1rem;
+  background: var(--tinta);
+  color: #c9cce0;
+}
+
+.pie__interior {
+  padding-block: 2.25rem;
+}
+
+.pie .marca {
+  color: var(--blanco);
+  margin-bottom: 0.4rem;
+}
+
+.pie .marca span {
+  color: var(--resaltador);
+}
+
+.pie p {
+  margin: 0 0 0.35rem;
+}
+
+.pie__nota {
+  font-size: 0.85rem;
+  color: #a9adc8;
+}
+
 /* ============ Fichas de oferta (con talón de fecha) ============ */
 .fichas {
   display: grid;
@@ -1049,6 +1246,8 @@ fieldset {
 
   .fichas { grid-template-columns: 1fr 1fr; }
 
+  .areas__lista { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
   .fila-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1069,6 +1268,8 @@ fieldset {
 }
 
 @media (min-width: 980px) {
+  .areas__lista { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
   .detalle { grid-template-columns: minmax(0, 1fr) 340px; }
 
   .panel-postular {

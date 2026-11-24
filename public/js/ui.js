@@ -130,3 +130,14 @@ export function enlaceWhatsApp(numero, mensaje) {
   const limpio = String(numero || "").replace(/\D/g, "");
   return `https://wa.me/${limpio}?text=${encodeURIComponent(mensaje)}`;
 }
+
+// Marca como inválidos los campos obligatorios que solo tienen espacios.
+// Llamar antes de form.reportValidity().
+export function exigirTexto(form) {
+  form.querySelectorAll("input[required]:not([type=radio]):not([type=checkbox]):not([type=file]), textarea[required]")
+    .forEach((campo) => {
+      if (campo.disabled) return;
+      const enBlanco = campo.value.length > 0 && campo.value.trim() === "";
+      campo.setCustomValidity(enBlanco ? "Este campo no puede tener solo espacios." : "");
+    });
+}

@@ -1,7 +1,7 @@
 // Formulario para publicar (RF02) o editar (RF03) una oferta. Con ?id= edita.
 import { requerirRol, mensajeError } from "../auth.js";
 import { crearOferta, actualizarOferta, obtenerOferta, CAMPOS_OFERTA } from "../ofertas.js";
-import { pintarCabecera, mostrarMensaje, escapar, hoyISO, parametro } from "../ui.js";
+import { pintarCabecera, mostrarMensaje, escapar, hoyISO, parametro, exigirTexto } from "../ui.js";
 import { CARRERAS, TIPOS, MODALIDADES, ROLES, VALIDACION } from "../datos.js";
 
 pintarCabecera();
@@ -48,7 +48,9 @@ if (id) {
     form.querySelectorAll("input[name=carreras]").forEach((c) => {
       c.checked = (oferta.carreras || []).includes(c.value);
     });
-    form.fechaLimite.min = ""; // al editar se permite mantener la fecha original
+    // Al editar se puede mantener la fecha original aunque ya pasó, pero no elegir otra fecha pasada.
+    const hoy = hoyISO();
+    form.fechaLimite.min = oferta.fechaLimite && oferta.fechaLimite < hoy ? oferta.fechaLimite : hoy;
   }
 }
 
@@ -66,6 +68,7 @@ form.addEventListener("submit", async (evento) => {
   evento.preventDefault();
   mostrarMensaje(mensaje, "");
 
+  exigirTexto(form);
   const datos = leerFormulario();
   const sinCarreras = datos.carreras.length === 0;
   errorCarreras.hidden = !sinCarreras;

@@ -3,6 +3,13 @@ import { pintarCabecera, mostrarMensaje, parametro } from "../ui.js";
 
 pintarCabecera();
 
+// Solo acepta rutas del propio sitio ("/empresa/panel.html"). Así nadie puede armar un enlace
+// de login que lleve a otra página (https://...) o que ejecute código (javascript:...).
+function rutaSegura(ruta) {
+  if (!ruta || !ruta.startsWith("/") || ruta.startsWith("//") || ruta.startsWith("/\\")) return null;
+  return ruta;
+}
+
 const form = document.getElementById("form-login");
 const mensaje = document.getElementById("mensaje");
 
@@ -16,7 +23,7 @@ form.addEventListener("submit", async (evento) => {
 
   try {
     const perfil = await iniciarSesion(form.correo.value.trim(), form.password.value);
-    window.location.href = parametro("volver") || rutaInicio(perfil);
+    window.location.href = rutaSegura(parametro("volver")) || rutaInicio(perfil);
   } catch (error) {
     mostrarMensaje(mensaje, mensajeError(error), "error");
     boton.disabled = false;
